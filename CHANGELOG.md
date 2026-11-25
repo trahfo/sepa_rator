@@ -7,6 +7,8 @@ Successor to [salesking/sepa_king](https://github.com/salesking/sepa_king) (unma
 ### Fixed
 
 - AT (PSA) profiles write exactly one element in `<InitgPty>`, as the PSA schemas require: the name, or the id when an initiating party identification (`initiating_party_identifier`, `initiating_party_bic`, `initiating_party_lei`) is set. Direct debits used to write the name and the creditor identifier, which Austrian banks reject; the rule was lost when the XSD 1.1 asserts were stripped. New profile feature `single_initiating_party_element`
+- Date validations (requested date, mandate date of signature) use the application time zone via the new `SEPA.today` (`Date.current` when ActiveSupport time zones are loaded, `Date.today` otherwise). Around midnight a mandate signed today in e.g. Europe/Vienna was rejected as being in the future on a UTC clock
+- `require 'sepa_rator'` works outside Rails: `date` and `time` are loaded explicitly
 
 ### Changed
 
